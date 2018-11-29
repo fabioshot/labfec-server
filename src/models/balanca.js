@@ -22,10 +22,11 @@ export default (sequelize, DataTypes) => {
 
 Balanca.associate = (models) => {
     Balanca.belongsTo(models.Modelo, {
+        through: 'balanca_modelo',
         foreignKey: {
             allowNull: false,
-            field: 'modelo',
-            name: 'modelo'
+            field: 'modelo_id',
+            name: 'modeloId'
         }
     });
 }

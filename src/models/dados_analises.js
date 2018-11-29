@@ -1,11 +1,5 @@
 export default (sequelize, DataTypes) => {
   const DadosAnalises = sequelize.define('DadosAnalises', {
-    id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
-    },
     umidade: {
         type: DataTypes.STRING           
     },
@@ -33,19 +27,20 @@ export default (sequelize, DataTypes) => {
 });
 
 DadosAnalises.associate = (models) => {
+    
     DadosAnalises.belongsTo(models.Amostra, {
         foreignKey: {
             allowNull: false,
-            field: 'amostra',
-            name: 'amostra'
+            field: 'amostra_id',
+            name: 'amostraId'
         }
     });
 
     DadosAnalises.belongsTo(models.Analise, {
         foreignKey: {
             allowNull: false,
-            field: 'analise',
-            name: 'analise'
+            field: 'analise_id',
+            name: 'analiseId'
         }
     });
 };

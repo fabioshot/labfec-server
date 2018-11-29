@@ -28,9 +28,17 @@ export default (sequelize, DataTypes) => {
 });
 
 Amostra.associate = (models) => {
-    Amostra.belongsTo(models.Produto, {
+    Amostra.belongsToMany(models.Produto, {
+        through: 'produto_amostra',
         foreignKey: {
-            allowNull: false,
+            field: 'produto',
+            name: 'produto'
+        }
+    });
+
+    Amostra.belongsToMany(models.Analise, {
+        through: 'amostra_analise',
+        foreignKey: {
             field: 'produto',
             name: 'produto'
         }
