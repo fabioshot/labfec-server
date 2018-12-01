@@ -26,6 +26,7 @@ export default `
       admissao: String!,
       saida: String,
       observacao: String,
+      status: Boolean!
       usuario: String!,
       senha: String!,
       bloqueado: Boolean,
@@ -39,9 +40,10 @@ export default `
       saida: String,
       observacao: String,
       bloqueado: Boolean,
+      cargo: Int!
     ): Funcionario
 
-    updateSenha(id: ID!, senha: String!): Int
+    updateSenha(id: ID!, senha: String!, bloqueado: Boolean): Int
     
     deleteFuncionario(id: ID!): Int
   }

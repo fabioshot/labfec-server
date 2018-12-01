@@ -20,6 +20,10 @@ export default (sequelize, DataTypes) => {
     observacao: {
         type: DataTypes.TEXT
     },
+    status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
+    },
     usuario: {
         type: DataTypes.STRING(50),
         allowNull: false,
