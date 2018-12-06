@@ -45,7 +45,7 @@ export default `
 
     updateSenha(id: ID!, senha: String!, bloqueado: Boolean): Int
     
-    deleteFuncionario(id: ID!): Int
+    deleteFuncionario(id: ID!): Boolean
   }
 
 `;

@@ -1,49 +1,42 @@
 export default (sequelize, DataTypes) => {
   const Amostra = sequelize.define('Amostra', {
     id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			primaryKey: true,
+			autoIncrement: true
     },
     tipo: {
-        type: DataTypes.STRING,
-        allowNull:false
+			type: DataTypes.STRING(100),
+			allowNull:false
     },
     datafab: {
-        type: DataTypes.DATE,
-        allowNull: false
+			type: DataTypes.DATE,
+			allowNull: false
     },
     horafab: {
-        type: DataTypes.TIME,
-        allowNull: false
+			type: DataTypes.TIME,
+			allowNull: false
     },
     lote: {
-        type: DataTypes.STRING,
-        allowNull:false
-    }
-},
-{
-    tableName: 'amostra'
-});
+			type: DataTypes.STRING(30),
+			allowNull:false
+		}
+	},	
+	{
+		tableName: 'amostra'
+	});
 
-Amostra.associate = (models) => {
-    Amostra.belongsToMany(models.Produto, {
-        through: 'produto_amostra',
-        foreignKey: {
-            field: 'produto',
-            name: 'produto'
-        }
-    });
-
+	Amostra.associate = (models) => {
     Amostra.belongsToMany(models.Analise, {
-        through: 'amostra_analise',
-        foreignKey: {
-            field: 'produto',
-            name: 'produto'
-        }
-    });
-};
+			through: 'DadosAnalises',
+			foreignKey: {
+				allowNull: false,
+				field: 'amostra_id',
+				name: 'amostra'
+			}
+		});
+	};
 return Amostra;
 };
 

@@ -18,8 +18,6 @@ const models = {
   DadosAnalises: sequelize.import('./dados_analises'),
   Embalagem: sequelize.import('./embalagem'),
   Funcionario: sequelize.import('./funcionario'),
-  Marca: sequelize.import('./marca'),
-  Modelo: sequelize.import('./modelo'),
   Produto: sequelize.import('./produto'),
 };
 

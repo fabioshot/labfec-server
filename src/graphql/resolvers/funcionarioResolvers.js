@@ -1,22 +1,29 @@
 export default {
     Query: {
-      funcionario: (parent, { id }, { db }, info) => db.Funcionario.findByPk({ id: id }),
-      funcionarios: (parent, args, { db }, info) => db.Funcionario.findAll(),
+      async funcionario (parent, { id }, { db }, info) {
+        return await db.Funcionario.findByPk({ id: id })
+      },
+
+      async funcionarios (parent, args, { db }, info) {
+        return await db.Funcionario.findAll();
+      }
     },
   
     Mutation: {
-      createFuncionario: (parent,  { nome, admissao, observacao, status,  usuario, senha, bloqueado, cargo } , { db }, info) => db.Funcionario.create({
-        nome: nome,
-        admissao: admissao,
-        observacao: observacao,
-        status: status,
-        usuario: usuario,
-        senha: senha,
-        bloqueado: bloqueado,
-        cargo: cargo,
-      }),
+      async createFuncionario (parent,  { nome, admissao, observacao, status,  usuario, senha, bloqueado, cargo } , { db }, info) {
+        return await db.Funcionario.create({
+          nome: nome,
+          admissao: admissao,
+          observacao: observacao,
+          status: status,
+          usuario: usuario,
+          senha: senha,
+          bloqueado: bloqueado,
+          cargo: cargo
+        });
+      },
   
-      updateFuncionario: async (parent, { id, nome, admissao, saida, observacao, status, cargo }, { db }, info) => {
+      async updateFuncionario (parent, { id, nome, admissao, saida, observacao, status, cargo }, { db }, info) {
         if (!db.Funcionario) {
           throw new Error('Funcioanrio não encontrado')
         }
@@ -30,9 +37,9 @@ export default {
           cargo
         });
         return dados;      
-      },
+      },       
 
-      updateSenha: async (parent, { id, senha, bloqueado}, { bd }, info ) => {
+      async updateSenha (parent, { id, senha, bloqueado}, { bd }, info ){
         if (!db.Funcionario) {
           throw new Error('Funcioanrio não encontrado')
         }
@@ -41,12 +48,15 @@ export default {
           senha,
           bloqueado
         });
-      },
+        return dados;
+      },     
   
-      deleteFuncionario: (parent, {id}, { db }, info) => db.Funcionario.destroy({
+      async deleteFuncionario (parent, {id}, { db }, info){
+        return await db.Funcionario.destroy({
         where: { 
           id: id 
         }
-      })
-    }
-  };
+      });
+      }
+  }
+}

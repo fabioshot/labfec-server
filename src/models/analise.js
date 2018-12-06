@@ -2,52 +2,45 @@
 export default (sequelize, DataTypes) => {
   const Analise = sequelize.define('Analise', {
     id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement:true
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			primaryKey: true,
+			autoIncrement:true
     },
     data: {
-        type: DataTypes.DATE,
-        allowNull: false
+			type: DataTypes.DATE,
+			allowNull: false
     },
     hora: {
-        type: DataTypes.TIME,
-        allowNull: false
+			type: DataTypes.TIME,
+			allowNull: false
     },
     turno: {
-        type: DataTypes.STRING,
-        allowNull: false
+			type: DataTypes.STRING(30),
+			allowNull: false
     },
     acidez: {
-        type: DataTypes.DOUBLE
+			type: DataTypes.DOUBLE
     },
     viscosidade: {
-        type: DataTypes.DOUBLE
+			type: DataTypes.DOUBLE
     }
-},
-{
-    tableName: 'analise'
-});
 
-Analise.associate = (models) => {
-    Analise.belongsTo(models.Produto, {
-        through: 'funcionario_amostra',
-        foreignKey: {
-            allowNull: false,
-            field: 'funcionario_id',
-            name: 'funcionarioId'
-        }
-    });
+	},
+	{
+		tableName: 'analise'
+	});
 
-    Analise.belongsToMany(models.Produto, {
-        through: 'analise_amostra',
-        foreignKey: {
-            field: 'amostra_id',
-            name: 'amostraId'
-        }
-    });
-}
+	Analise.associate = (models) => {
+  	Analise.belongsToMany(models.Amostra, {
+			through: 'DadosAnalises',
+			foreignKey: {
+				allowNull: false,
+				field: 'analise_id',
+				name: 'analise'
+			}
+		});
+	}
 
 return Analise;
 };

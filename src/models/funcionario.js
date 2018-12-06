@@ -1,58 +1,70 @@
 export default (sequelize, DataTypes) => {
-  const Funcionario = sequelize.define('Funcionario', {
+  const Funcionario = sequelize.define('funcionario', {
     id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        autoIncrement:true,
-        primaryKey: true
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			autoIncrement:true,
+			primaryKey: true
     },
     nome: {
-        type: DataTypes.STRING(100),
-        allowNull: false
+			type: DataTypes.STRING(100),
+			allowNull: false
     },
     admissao: {
-        type: DataTypes.DATE,
-        allowNull: false
+			type: DataTypes.DATE,
+			allowNull: false
     },
     saida: {
-        type: DataTypes.DATE
+			type: DataTypes.DATE
     },
     observacao: {
-        type: DataTypes.TEXT
+			type: DataTypes.TEXT
     },
     status: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
+			type: DataTypes.BOOLEAN,
+			allowNull: false
     },
     usuario: {
-        type: DataTypes.STRING(50),
-        allowNull: false,
-        unique: true
+			type: DataTypes.STRING(50),
+			allowNull: false,
+			unique: true
     },
     senha: {
-        type: DataTypes.STRING(100),
-        allowNull: false,
-        validate:{
-            notEmpty: true
-        }
+			type: DataTypes.STRING(100),
+			allowNull: false,
+			validate:{
+					notEmpty: true
+			}
     },
     bloqueado: {
-        type: DataTypes.BOOLEAN
-    }
-},
-{
-tableName: 'funcionario'
-});
+			type: DataTypes.BOOLEAN
+		}
+		
+  },
+  {
+    tableName: 'funcionario'
+  });
+  
+  Funcionario.associate = (models) => {
+    
 
-Funcionario.associate = (models) => {
-    Funcionario.belongsTo(models.Cargo, {
-        foreignKey: {
-            allowNull: false,
-            field: 'cargo',
-            name: 'cargo'
-        }
+    Funcionario.belongsToMany(models.Balanca, {
+      through: 'Calibragem',
+      foreignKey: {
+        allowNull: false,
+        field: 'funcionario_id',
+        name: 'funcionario'
+      }
     });
-};
 
-return Funcionario;
+    Funcionario.hasMany(models.Analise, {
+        foreignKey: {
+          allowNull: false,
+          field: 'analise_id',
+          name: 'analise'
+        }
+      });
+    }  
+
+  return Funcionario;
 }

@@ -1,30 +1,36 @@
 export default {
   Query: {
-    cargo: (parent, { id }, { db }, info) => db.Cargo.findOne({ descricao: descricao }),
-    cargos: (parent, args, { db }, info) => db.Cargo.findAll(),
+    async cargos (parent, args, { db }, info ) {
+      return await db.Cargo.findAll();
+    },
+
+    async cargo (parent, { id }, { db }, info ) {
+      return await db.Cargo.findByPk(id);
+    },
   },
 
   Mutation: {
-    createCargo: (parent, { descricao }, { db }, info) => db.Cargo.create({
-      descricao: descricao
-    }),
-
-    updateCargo: async (parent, { descricao, id }, { db }, info) => {
-      if (!db.Cargo) {
-        throw new Error('Cargo não encontrado')
-      }
-      const dados = await db.Cargo.findByPk(id);
-      await dados.update({
-        descricao
-      });
-      return dados;      
+    async createCargo (parent, { descricao }, { db }, info ) {
+      return await db.Cargo.create({
+        descricao: descricao
+      });      
     },
 
-    deleteCargo: (parent, {id}, { db }, info) => db.Cargo.destroy({
-      where: { 
-        id: id 
-      }
-    })
+    async updateCargo (parent, { descricao, id }, { db }, info ) {
+      const cargo = await db.Cargo.findByPk(id);
+      await cargo.update({
+        descricao
+      });
+      return cargo;      
+    },
+
+    async deleteCargo (parent, {id}, { db }, info) {
+      return db.Cargo.destroy({
+        where: { 
+          id: id 
+        }
+      });  
+    }
   }
-};
+}
   

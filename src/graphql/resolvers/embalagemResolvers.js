@@ -1,31 +1,38 @@
 export default {
   Query: {
-    embalagem: (parent, { id }, { db }, info) => db.Embalagem.findOne({ descricao: descricao }),
-    embalagens: (parent, args, { db }, info) => db.Embalagem.findAll(),
+    async embalagens (parent, args, { db }, info) {
+      return await db.Embalagem.findAll();
+    },
+
+    async embalagem (parent, { id }, { db }, info ) {
+      return await db.Embalagem.findByPk(id);
+    },
   },
 
   Mutation: {
-    createEmbalagem: (parent, { descricao, peso }, { db }, info) => db.Embalagem.create({
-      descricao: descricao,
-      peso: peso
-    }),
+    async createEmbalagem (parent, { descricao, peso }, { db }, info) {
+      return await db.Embalagem.create({
+        descricao: descricao,
+        peso: peso
+      });      
+    },
 
-    updateEmbalagem: async (parent, { descricao, peso,  id }, { db }, info) => {
-      if (!db.Embalagem) {
-        throw new Error('Embalagem não encontrado')
-      }
-      const dados = await db.Embalagem.findByPk(id);
-      await dados.update({
+    async updateEmbalagem (parent, { descricao, id, peso }, { db }, info) {
+      const embalagem = await db.Embalagem.findByPk(id);
+      await embalagem.update({
         descricao,
         peso
       });
-      return dados;      
+      return embalagem;      
     },
 
-    deleteEmbalagem: (parent, {id}, { db }, info) => db.Embalagem.destroy({
-      where: { 
-        id: id 
-      }
-    })
+    async deleteEmbalagem (parent, {id}, { db }, info) {
+      return await db.Embalagem.destroy({
+        where: {
+          id: id
+        }
+      })
+    }
   }
 };
+  

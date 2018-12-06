@@ -36,23 +36,5 @@ export default (sequelize, DataTypes) => {
     tableName: 'calibragem'
 });
 
-Calibragem.associate = (models) => {
-    Calibragem.belongsTo(models.Balanca, {
-        foreignKey: {
-            allowNull: false,
-            field: 'balanca',
-            name: 'balanca'
-        }
-    });
-
-    Calibragem.belongsTo(models.Funcionario, {
-        foreignKey: {
-            allowNull: false,
-            field: 'funcionario',
-            name: 'funcionario'
-        }
-    });
-};
-
 return Calibragem;
 };

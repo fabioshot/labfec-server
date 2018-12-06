@@ -8,7 +8,7 @@ type Cargo {
 
 type Query {
   cargos: [Cargo!]!
-  cargo(descricao: String!): Cargo!
+  cargo(id: ID!): Cargo!
 }
 
 type Mutation {
